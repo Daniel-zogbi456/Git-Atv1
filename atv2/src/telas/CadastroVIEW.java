@@ -3,18 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package telas;
+ import beans.Produto;
+ import dao.ProdutoDAO;
+ import java.util.List;
+ import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Maria
- */
 public class CadastroVIEW extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastroVIEW
-     */
+    private void preencherTabela() {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+            
+                List<Produto> listaProdutos = produtoDAO.getProduto();
+            
+                DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+            
+                
+                      
+                for (Produto c : listaProdutos) { 
+                    Object[] obj = new Object[] { 
+                        c.getId(),            
+                        c.getNome(),  
+                        c.getPreco(), c.getStatus(),
+                    };
+                    tabelaProdutos.addRow(obj);
+                }    
+            }
+    
     public CadastroVIEW() {
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -29,20 +47,17 @@ public class CadastroVIEW extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProdutos = new javax.swing.JTable();
         btnCadastrarP = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Casa de Leilões");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "Valor", "Status"
@@ -56,7 +71,7 @@ public class CadastroVIEW extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProdutos);
 
         btnCadastrarP.setText("Cadastar");
         btnCadastrarP.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +175,6 @@ public class CadastroVIEW extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProdutos;
     // End of variables declaration//GEN-END:variables
 }
