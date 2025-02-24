@@ -110,7 +110,8 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-      String nomeProduto = txtNome.getText();
+      try{
+          String nomeProduto = txtNome.getText();
       String valorProduto = txtValor.getText();
       String statusProduto = txtStatus.getText();
       
@@ -126,6 +127,11 @@ public class Cadastro extends javax.swing.JFrame {
       txtNome.setText("");
       txtValor.setText("");
       txtStatus.setText("");
+      
+      }catch(Exception e){
+          System.out.println("Não foi possível cadastrar o produto");
+      }
+        System.out.println("O produto foi cadastrado com sucesso");
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
