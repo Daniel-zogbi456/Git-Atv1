@@ -4,17 +4,40 @@
  */
 package telas;
 
+import beans.Produto;
+import dao.ProdutoDAO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Maria
  */
 public class telaVendas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form telaVendas
-     */
+    private void preencherTabela() {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+            
+                List<Produto> listaProdutos = produtoDAO.getProdutoStatus();
+            
+                DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutosV.getModel();
+            
+                
+                      
+                for (Produto c : listaProdutos) { 
+                    Object[] obj = new Object[] { 
+                        c.getId(),            
+                        c.getNome(),  
+                        c.getPreco(), c.getStatus(),
+                    };
+                    tabelaProdutos.addRow(obj);
+                }    
+            }
+
+    
     public telaVendas() {
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -35,10 +58,7 @@ public class telaVendas extends javax.swing.JFrame {
 
         tblProdutosV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "Valor", "Status"
@@ -58,6 +78,11 @@ public class telaVendas extends javax.swing.JFrame {
         jLabel1.setText("Produtos Vendidos");
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,6 +115,13 @@ public class telaVendas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+       CadastroVIEW telaC = new CadastroVIEW();
+       telaC.setVisible(true);
+       this.dispose();
+       
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments

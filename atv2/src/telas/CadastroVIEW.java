@@ -159,7 +159,9 @@ public class CadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarPActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        // TODO add your handling code here:
+        telaVendas telaV = new telaVendas();
+        telaV.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVenderPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderPActionPerformed
