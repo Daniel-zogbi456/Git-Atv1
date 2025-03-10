@@ -30,6 +30,26 @@ public class CadastroVIEW extends javax.swing.JFrame {
                 }    
             }
     
+    private void atualizarTabela() {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+            
+                List<Produto> listaProdutos = produtoDAO.getProduto();
+            
+                DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+                tabelaProdutos.setRowCount(0);
+                
+                      
+                for (Produto c : listaProdutos) { 
+                    Object[] obj = new Object[] { 
+                        c.getId(),            
+                        c.getNome(),  
+                        c.getPreco(), c.getStatus(),
+                    };
+                    
+                    tabelaProdutos.addRow(obj);
+                }    
+            }
+    
     public CadastroVIEW() {
         initComponents();
         preencherTabela();
@@ -165,7 +185,15 @@ public class CadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVenderPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderPActionPerformed
-        // TODO add your handling code here:
+        if(tblProdutos.getSelectedRow() != -1){
+            Produto p = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+            
+            p.setId((int)tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0));
+            dao.venderProduto(p);
+            atualizarTabela();
+            
+        }
     }//GEN-LAST:event_btnVenderPActionPerformed
 
     /**
