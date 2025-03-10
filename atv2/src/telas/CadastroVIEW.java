@@ -30,6 +30,26 @@ public class CadastroVIEW extends javax.swing.JFrame {
                 }    
             }
     
+    private void atualizarTabela() {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+            
+                List<Produto> listaProdutos = produtoDAO.getProduto();
+            
+                DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+                tabelaProdutos.setRowCount(0);
+                
+                      
+                for (Produto c : listaProdutos) { 
+                    Object[] obj = new Object[] { 
+                        c.getId(),            
+                        c.getNome(),  
+                        c.getPreco(), c.getStatus(),
+                    };
+                    
+                    tabelaProdutos.addRow(obj);
+                }    
+            }
+    
     public CadastroVIEW() {
         initComponents();
         preencherTabela();
@@ -49,6 +69,8 @@ public class CadastroVIEW extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
         btnCadastrarP = new javax.swing.JButton();
+        btnVendas = new javax.swing.JButton();
+        btnVenderP = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,14 +102,24 @@ public class CadastroVIEW extends javax.swing.JFrame {
             }
         });
 
+        btnVendas.setText("Consultar Vendas");
+        btnVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendasActionPerformed(evt);
+            }
+        });
+
+        btnVenderP.setText("Vender Produto");
+        btnVenderP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCadastrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(259, 259, 259))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -97,6 +129,14 @@ public class CadastroVIEW extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVenderP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCadastrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,8 +146,11 @@ public class CadastroVIEW extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(btnCadastrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVenderP, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,6 +177,24 @@ public class CadastroVIEW extends javax.swing.JFrame {
         Cadastro telaC = new Cadastro();
         telaC.setVisible(true);
     }//GEN-LAST:event_btnCadastrarPActionPerformed
+
+    private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
+        telaVendas telaV = new telaVendas();
+        telaV.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVendasActionPerformed
+
+    private void btnVenderPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderPActionPerformed
+        if(tblProdutos.getSelectedRow() != -1){
+            Produto p = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+            
+            p.setId((int)tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0));
+            dao.venderProduto(p);
+            atualizarTabela();
+            
+        }
+    }//GEN-LAST:event_btnVenderPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +233,8 @@ public class CadastroVIEW extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrarP;
+    private javax.swing.JButton btnVendas;
+    private javax.swing.JButton btnVenderP;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
